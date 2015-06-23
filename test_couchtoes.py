@@ -1,14 +1,8 @@
 __author__ = 'Ian Bellamy'
 
-import sys
-# TODO: fix this environment variable
-sys.path.append('/usr/local/lib/python3.4/dist-packages')
-
 import unittest
-import os
-
 import requests
-from couchtoes import CouchDB
+from couchtoes import *
 
 class TestCouchToEs(unittest.TestCase):
 
@@ -20,7 +14,7 @@ class TestCouchToEs(unittest.TestCase):
                               headers=self.headers
                               )
         status.close()
-        self.assertTrue(status.status_code == 200)
+        self.assertTrue(status.status_code == 200, "Make sure couchdb is running on localhost:5984")
 
     def test_couchdb_connnection(self):
         session = CouchDB.connect(url='http://localhost:5984', headers = self.headers)
@@ -44,6 +38,15 @@ class TestCouchToEs(unittest.TestCase):
         info = cursor.fetchone()
         self.assertEqual(len(info), 3)
 
+    def test_raises_error_on_wrong_view(self):
+        # certain view documents, such as _design/view, do not have rows
+        session = CouchDB.connect(
+            url='http://localhost:5984',
+            headers=self.headers
+             )
+        cursor = session.cursor()
+        with self.assertRaises(DataError):
+            cursor(view="pronot_spartan/_design/sales", params={"limit": 100})
 
 if __name__ == '__main__':
     unittest.main()
