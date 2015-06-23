@@ -181,8 +181,8 @@ if __name__ == "__main__":
                     pprint(cursor.fetchall())
         elif user == "d":
             to_file = input("Name of the dump file: ")
-
-            cursor(dump=True)
+            params = {'include_docs': True}
+            cursor(dump=True, params=params)
             f = open(to_file, 'w')
             f.write(str(cursor.items))
             f.close()

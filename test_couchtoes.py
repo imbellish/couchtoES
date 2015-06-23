@@ -4,6 +4,7 @@ import unittest
 import requests
 from couchtoes import *
 
+
 class TestCouchToEs(unittest.TestCase):
 
     def setUp(self):
@@ -14,15 +15,21 @@ class TestCouchToEs(unittest.TestCase):
                               headers=self.headers
                               )
         status.close()
-        self.assertTrue(status.status_code == 200, "Make sure couchdb is running on localhost:5984")
+        self.assertTrue(
+            status.status_code == 200,
+            "Make sure couchdb is running on localhost:5984")
 
     def test_couchdb_connnection(self):
-        session = CouchDB.connect(url='http://localhost:5984', headers = self.headers)
+        session = CouchDB.connect(
+            url='http://localhost:5984',
+            headers=self.headers)
         self.assertTrue(session.isconnected())
         session.close()
 
     def test_couch_closing(self):
-        session = CouchDB.connect(url='http://localhost:5984', headers=self.headers)
+        session = CouchDB.connect(
+            url='http://localhost:5984',
+            headers=self.headers)
         session.close()
         with self.assertRaises(AttributeError):
             session.status
@@ -31,7 +38,7 @@ class TestCouchToEs(unittest.TestCase):
         session = CouchDB.connect(
             url='http://localhost:5984',
             headers=self.headers
-             )
+        )
         params = {"limit": 1}
         cursor = session.cursor()
         cursor(view="pronot_spartan/_all_docs", params=params)
@@ -43,14 +50,10 @@ class TestCouchToEs(unittest.TestCase):
         session = CouchDB.connect(
             url='http://localhost:5984',
             headers=self.headers
-             )
+        )
         cursor = session.cursor()
         with self.assertRaises(DataError):
             cursor(view="pronot_spartan/_design/sales", params={"limit": 100})
 
 if __name__ == '__main__':
     unittest.main()
-
-
-
-
