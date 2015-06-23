@@ -16,36 +16,33 @@ class TestCouchToEs(unittest.TestCase):
         self.headers = {"User-Agent": "admin:admin"}
 
     def test_couchdb_is_working(self):
-        status = requests.get('http://localhost:5984/', #pronto_spartan',
+        status = requests.get('http://localhost:5984/',
                               headers=self.headers
                               )
         status.close()
         self.assertTrue(status.status_code == 200)
 
     def test_couchdb_connnection(self):
-        session = CouchDB.connect()#auth=("admin", "admin"))
+        session = CouchDB.connect(url='http://localhost:5984', headers = self.headers)
         self.assertTrue(session.isconnected())
         session.close()
 
     def test_couch_closing(self):
-        session = CouchDB.connect(url='http://localhost:5984/', auth=("admin", "admin"))
+        session = CouchDB.connect(url='http://localhost:5984', headers=self.headers)
         session.close()
         with self.assertRaises(AttributeError):
             session.status
 
     def test_couch_standard_get(self):
         session = CouchDB.connect(
-            url='http://localhost:5984/',
+            url='http://localhost:5984',
             headers=self.headers
              )
         params = {"limit": 1}
         cursor = session.cursor()
-        cursor(view="_all_docs", params=params)
+        cursor(view="pronot_spartan/_all_docs", params=params)
         info = cursor.fetchone()
-        print(info)
-        info = cursor.fetchone()
-        print(info)
-        #self.assertGreater()
+        self.assertEqual(len(info), 3)
 
 
 if __name__ == '__main__':

@@ -46,17 +46,13 @@ class Cursor(object):
     def __call__(self, view="_all_docs", method=None, params=None, dump=False):
 
         # for a straight cursor(view="myView", dump=True)
-        if method == None and params == None and dump == True:
-
-            if self.connection.auth:
-                self.items = requests.get(self.connection.url+view, auth=self.connection.auth).json()
-                self._items = self.items.__iter__()
-            else:
-                self.items = requests.get(self.connection.url+view).json()
-        # TODO: incomplete logic
+        # keep it simple; start with a dump all from all docs
+        if dump == True:
+            self.items = requests.get(self.connection.url+"/"+view, headers=self.connection.headers).json()
+            self._items = self.items['rows'].__iter__()
         elif params:
-            self.items = requests.get(self.connection.url+view, auth=self.connection.auth, data=params).json()
-            self._items = self.items.__iter__()
+            self.items = requests.get(self.connection.url+"/"+view, headers=self.connection.headers, params=params).json()
+            self._items = self.items["rows"].__iter__()
 
     def fetchone(self):
         return next(self._items)
@@ -77,6 +73,7 @@ class Warning(Exception):
 
 class InterfaceError(Error):
     pass
+
 
 class DatabaseError(Error):
     pass
