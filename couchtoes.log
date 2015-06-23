@@ -49,3 +49,66 @@ DEBUG:root:Creating cursor
 DEBUG:root:View not set. Going to default.
 INFO:requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): localhost
 DEBUG:requests.packages.urllib3.connectionpool:"GET /pronot_spartan/_all_docs?include_docs=True HTTP/1.1" 200 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): localhost
+DEBUG:requests.packages.urllib3.connectionpool:"GET / HTTP/1.1" 200 127
+DEBUG:root:Creating cursor
+DEBUG:root:Setting called view to default view.
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): localhost
+DEBUG:requests.packages.urllib3.connectionpool:"GET /pronot_spartan/_all_docs?limit=10 HTTP/1.1" 200 None
+DEBUG:root:not setting a view. rely on default. 
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): localhost
+DEBUG:requests.packages.urllib3.connectionpool:"GET /pronot_spartan/_all_docs?key=rx HTTP/1.1" 400 48
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): localhost
+DEBUG:requests.packages.urllib3.connectionpool:"GET / HTTP/1.1" 200 127
+DEBUG:root:Creating cursor
+DEBUG:root:View not set. Going to default.
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): localhost
+DEBUG:requests.packages.urllib3.connectionpool:"GET /pronot_spartan/_all_docs?key=org_name HTTP/1.1" 400 48
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): localhost
+DEBUG:requests.packages.urllib3.connectionpool:"GET / HTTP/1.1" 200 127
+DEBUG:root:Creating cursor
+DEBUG:root:View not set. Going to default.
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): localhost
+DEBUG:requests.packages.urllib3.connectionpool:"GET /pronot_spartan/_all_docs?org_id=4376 HTTP/1.1" 200 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): localhost
+DEBUG:requests.packages.urllib3.connectionpool:"GET / HTTP/1.1" 200 127
+DEBUG:root:Creating cursor
+DEBUG:root:View not set. Going to default.
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): localhost
+DEBUG:requests.packages.urllib3.connectionpool:"GET /pronot_spartan/_all_docs?event_date=2014-03-08 HTTP/1.1" 200 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): localhost
+DEBUG:requests.packages.urllib3.connectionpool:"GET / HTTP/1.1" 500 43
+DEBUG:root:Creating cursor
+DEBUG:root:View not set. Going to default.
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): localhost
+DEBUG:requests.packages.urllib3.connectionpool:"GET /pronot_spartan/_all_docs?include_docs=True HTTP/1.1" 500 43
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): localhost
+DEBUG:requests.packages.urllib3.connectionpool:"GET / HTTP/1.1" 500 43
+DEBUG:root:Creating cursor
+DEBUG:root:Setting called view to default view.
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): localhost
+DEBUG:requests.packages.urllib3.connectionpool:"GET /pronot_spartan/_all_docs?include_docs=True HTTP/1.1" 500 43
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): localhost
+DEBUG:requests.packages.urllib3.connectionpool:"GET / HTTP/1.1" 500 43
+DEBUG:root:Creating cursor
+DEBUG:root:Setting called view to default view.
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): localhost
+DEBUG:requests.packages.urllib3.connectionpool:"GET /pronot_spartan/_all_docs?limit=5&include_docs=True HTTP/1.1" 500 43
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): localhost
+DEBUG:requests.packages.urllib3.connectionpool:"GET / HTTP/1.1" 500 43
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): localhost
+DEBUG:requests.packages.urllib3.connectionpool:"GET / HTTP/1.1" 500 43
+DEBUG:root:Creating cursor
+DEBUG:root:Setting called view to default view.
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): localhost
+DEBUG:requests.packages.urllib3.connectionpool:"GET /pronot_spartan/_all_docs?limit=1 HTTP/1.1" 500 43
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): localhost
+DEBUG:requests.packages.urllib3.connectionpool:"GET / HTTP/1.1" 500 43
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): localhost
+DEBUG:requests.packages.urllib3.connectionpool:"GET / HTTP/1.1" 500 43
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): localhost
+DEBUG:requests.packages.urllib3.connectionpool:"GET / HTTP/1.1" 500 43
+DEBUG:root:Creating cursor
+DEBUG:root:Setting called view to default view.
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTP connection (1): localhost
+DEBUG:requests.packages.urllib3.connectionpool:"GET /pronot_spartan/_design/sales?limit=100 HTTP/1.1" 500 43

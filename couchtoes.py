@@ -1,11 +1,26 @@
 import requests
 import json
 import logging
+import configparser
 
 logging.basicConfig(filename="couchtoes.log", level=logging.DEBUG)
 
-
+# TODO: set config files
+"""
+config = configparser.ConfigParser()
+URL = config.get("db", "base_url")
+"""
 class CouchDB(object):
+    """
+    Example usage as per PEP 0249 https://www.python.org/dev/peps/pep-0249/
+
+    from couchtoes import CouchDB
+    db = CouchDB.connect(url="localhost:5984/db", headers={"User-Agent":"admin:admin"})
+    cursor = db.cursor()
+    cursor(view="_all_docs", params={"limit":1}
+    row = cursor.fetchone()
+
+    """
 
     @classmethod
     def connect(self, **kwargs):
@@ -152,7 +167,7 @@ if __name__ == "__main__":
             "User-Agent": "admin:admin"})
 
     cursor = db.cursor()
-    default_view = "pronot/_all_docs"
+    default_view = "pronot_spartan/_all_docs"
     options = [
         "(s) search",
         "(d) dump",
@@ -182,7 +197,7 @@ if __name__ == "__main__":
         elif user == "d":
             to_file = input("Name of the dump file: ")
             params = {'include_docs': True}
-            cursor(dump=True, params=params)
+            cursor(view=default_view, dump=True, params=params)
             f = open(to_file, 'w')
             f.write(str(cursor.items))
             f.close()
