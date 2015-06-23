@@ -8,22 +8,20 @@ logging.basicConfig(filename="couchtoes.log", level=logging.DEBUG)
 class CouchDB(object):
 
     @classmethod
-    def connect(self, url="http://localhost:5984/", auth=None):
-        if auth == None:
-            return Connection(url=url)
-        else:
-            return Connection(url=url, auth=auth)
+    def connect(self, **kwargs):
+        return Connection(**kwargs)
 
 
 class Connection(object):
 
-    def __init__(self, auth=None, url=None):
+    def __init__(self, auth=None, url=None, headers=None, params=None):
         self.auth = auth
         self.url = url
+        self.headers = headers
         if auth == None:
-            self.status = requests.get(self.url)
+            self.status = requests.get(self.url, headers=headers, params=params)
         else:
-            self.status = requests.get(self.url, auth=self.auth)
+            self.status = requests.get(self.url, headers=headers, params=params, auth=self.auth)
         #return self.status
 
     def isconnected(self):

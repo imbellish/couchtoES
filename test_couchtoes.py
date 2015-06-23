@@ -13,11 +13,11 @@ from couchtoes import CouchDB
 class TestCouchToEs(unittest.TestCase):
 
     def setUp(self):
-        pass
+        self.headers = {"User-Agent": "admin:admin"}
 
     def test_couchdb_is_working(self):
         status = requests.get('http://localhost:5984/', #pronto_spartan',
-                              auth=("admin", "admin")
+                              headers=self.headers
                               )
         status.close()
         self.assertTrue(status.status_code == 200)
@@ -28,14 +28,15 @@ class TestCouchToEs(unittest.TestCase):
         session.close()
 
     def test_couch_closing(self):
-        session = CouchDB.connect(auth=("admin", "admin"))
+        session = CouchDB.connect(url='http://localhost:5984/', auth=("admin", "admin"))
         session.close()
         with self.assertRaises(AttributeError):
             session.status
 
     def test_couch_standard_get(self):
         session = CouchDB.connect(
-            #auth=("admin", "admin")
+            url='http://localhost:5984/',
+            headers=self.headers
              )
         params = {"limit": 1}
         cursor = session.cursor()
