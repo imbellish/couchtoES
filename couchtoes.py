@@ -3,7 +3,9 @@ import json
 import logging
 import configparser
 
-logging.basicConfig(filename="couchtoes.log", level=logging.DEBUG)
+from datetime import datetime
+
+logging.basicConfig(filename="couchtoes.log", level=logging.ERROR)
 
 # TODO: set config files
 """
@@ -23,7 +25,7 @@ class CouchDB(object):
     """
 
     @classmethod
-    def connect(self, **kwargs):
+    def connect(cls, **kwargs):
         return Connection(**kwargs)
 
 
@@ -77,7 +79,7 @@ class Cursor(object):
             logging.debug("View not set. Going to default.")
             self.current_view = "pronot_spartan/_all_docs"
         elif not view:
-            logging.debug("not setting a view. rely on default. ")
+            logging.debug("not setting a view. rely on last used view")
             pass
         else:
             # only reassigns self.view when passed
@@ -100,7 +102,11 @@ class Cursor(object):
                 self.current_view,
                 headers=self.connection.headers,
                 params=params).json()
-            self._items = self.items["rows"].__iter__()
+            try:
+                self._items = self.items["rows"].__iter__()
+            except:
+                self._items = self.items
+                #print(self.items)
         elif method:
             raise NotImplementedError("cursor is restricted to GET's")
 
@@ -112,6 +118,32 @@ class Cursor(object):
         for doc in self._items:
             blob.append(doc)
         return blob
+
+def potatogun(esurl, data):
+    """
+    :param esurl: the URL to the elastic search index
+    :param data: a list of documents returned by the cursor or db dump
+    :return: a generator that returns a status and the id. each call to __next__()
+            puts the row to the ES index specified in esurl
+    """
+    # 201210220230_004418
+    """
+    gen = potatogun(esurl, data)
+    while True:
+        try:
+            next(gen)
+        except StopIteration:
+            break
+    """
+    now = datetime.now()
+    for row in data:
+        id = row["id"]
+        body = row["doc"]
+        r = requests.put(esurl+id, data=json.dumps(body))
+        yield r.reason, id
+        #logging.debug(r.reason + " " + id + " at " + str(datetime.now()))
+    again = datetime.now()
+
 
 
 class Error(Exception):
@@ -156,9 +188,9 @@ class NotSupportedError(DatabaseError):
 if __name__ == "__main__":
 
     from pprint import pprint
-
-    class memo:
-        pass
+    # view="pronto_atc/_all_docs", params={"include_docs":True}
+    # view="pronto_atc/_design/metrics/_view/metrics", params={"include_docs": True, "limit": 10}
+    # elastic search to point to: 192.168.1.99:9200/registration/spartan
 
     # default config
     db = CouchDB.connect(
@@ -193,11 +225,27 @@ if __name__ == "__main__":
                         exec('cursor(' + search_option + ')')
                     except Error as e:
                         print(e.__name__ + "occured")
-                    pprint(cursor.fetchall())
+                    data = cursor.fetchall()
+
+                    #pprint(data)
+                    write_to_file = input("Write to file? ")
+                    if write_to_file == "y":
+                        f = open("data.json", "w")
+                        f.write(json.dumps(data))
+                        f.close()
+                        print("dump complete")
+                        print_it = input("Pretty print results? ")
+                        if print_it == "y":
+                            pprint(data)
+                    else:
+                        print_it = input("Pretty print results? ")
+                        if print_it == "y":
+                            pprint(data)
         elif user == "d":
+            which_view = input("Name of the view: ")
             to_file = input("Name of the dump file: ")
             params = {'include_docs': True}
-            cursor(view=default_view, dump=True, params=params)
+            cursor(view=which_view, dump=True, params=params)
             f = open(to_file, 'w')
             f.write(str(cursor.items))
             f.close()

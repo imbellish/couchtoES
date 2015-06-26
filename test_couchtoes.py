@@ -41,7 +41,7 @@ class TestCouchToEs(unittest.TestCase):
         )
         params = {"limit": 1}
         cursor = session.cursor()
-        cursor(view="pronot_spartan/_all_docs", params=params)
+        cursor(view="pronto_atc/_all_docs", params=params)
         info = cursor.fetchone()
         self.assertEqual(len(info), 3)
 
@@ -53,7 +53,11 @@ class TestCouchToEs(unittest.TestCase):
         )
         cursor = session.cursor()
         with self.assertRaises(DataError):
-            cursor(view="pronot_spartan/_design/sales", params={"limit": 100})
+            cursor(view="pronto_atc/_design/sales", params={"limit": 100})
+
+
+
+
 
 if __name__ == '__main__':
     unittest.main()
